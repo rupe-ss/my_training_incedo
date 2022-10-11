@@ -1,0 +1,18 @@
+<html>
+    <head>
+        <script src="./employee.js"></script>
+    </head>
+    <body>
+        <h1 id="employee_header">Employee Operations</h1>
+        <button id="btnClick" onclick="clickBtn()">Click Me</button>
+        <br />
+        <div id="msg"></div>
+        <hr>
+        <form id="empForm" onsubmit="readEmployeeData()">
+            Name: <input id="ename" type="text" name="name" /><br/> <br />
+            Salary: <input id="esalary" type="number" name="salary" /><br/> <br />
+            City: <input id="ecity" type="text" name="city" /><br/> <br />
+            <input type="submit" value="Add Employee">
+        </form>
+    </body>
+</html>
