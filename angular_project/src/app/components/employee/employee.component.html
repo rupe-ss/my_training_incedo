@@ -1,0 +1,11 @@
+<button>Sort by Salary - ASC</button> &nbsp;&nbsp;&nbsp;
+<input type="text" name="city" [(ngModel)]="city"
+        placeholder="Enter city to filter"> &nbsp;&nbsp;
+<button (click)="filterEmployee()">Filter</button>
+<h2>All Employees</h2>
+<div class="employee-item" *ngFor="let e of employees">
+  ID: {{e.id}} <br />
+  Name: {{e.name}} <br />
+  Salary: {{e.salary}} <br />
+  City: {{e.city}} <br />
+</div>

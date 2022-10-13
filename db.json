@@ -1,0 +1,28 @@
+{
+  "employees": [
+    {
+      "id": 1,
+      "name": "harry potter",
+      "city": "london",
+      "salary": 95000
+    },
+    {
+      "id": 2,
+      "name": "sam club",
+      "city": "new jersey",
+      "salary": 75000
+    },
+    {
+      "id": 3,
+      "name": "json manson",
+      "city": "florida",
+      "salary": 65000
+    },
+    {
+      "id": 4,
+      "name": "gabriel windows",
+      "city": "newyork",
+      "salary": 70000
+    }
+  ]
+}

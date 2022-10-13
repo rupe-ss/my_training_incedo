@@ -1,0 +1,9 @@
+<p>x={{x}}</p>
+<p>y={{y}}</p>
+
+<button (click)="calc('add')">ADD</button>
+<button (click)="calc('sub')">SUB</button>
+<button (click)="calc('mul')">MUL</button>
+<button (click)="calc('div')">DIV</button>
+<br />
+<div *ngIf="result">Result is: {{result}}</div>

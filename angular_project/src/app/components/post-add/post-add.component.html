@@ -1,0 +1,33 @@
+<br />
+{{msg}}
+<br />
+<form (submit)="OnPostSubmit(postForm)" #postForm="ngForm">
+  <label>Title: </label>
+  <input type="text"
+        name="title" ngModel #title="ngModel"
+        required pattern="[a-zA-Z0-9 _-]+">
+  <span *ngIf="title.invalid && title.touched">
+    <small *ngIf="title.errors['required']">Title is required</small>
+    <small *ngIf="title.errors['pattern']">Only special chars [_ and -] are allowed</small>
+  </span>
+  <br /><br />
+  <textarea rows="10" cols="50"
+        placeholder="Enter post body"
+        name="body" ngModel
+        #body="ngModel" required ></textarea>
+      <span *ngIf="body.invalid && body.touched">
+          <small *ngIf="body.errors['required']">Body of post is required</small>
+       </span>
+  <br /><br />
+  <label>User ID: </label>
+  <input type="text" name="userId"
+        ngModel #userId="ngModel" required pattern="[0-9]+">
+      <span *ngIf="userId.invalid && userId.touched">
+          <small *ngIf="userId.errors['required']">UserID is required</small>
+          <small *ngIf="userId.errors['pattern']">Only numbers from 0 to 9 are allowed</small>
+      </span>
+  <br><br>
+
+  <input type="submit" value="Add Post" [disabled]="!postForm.valid">
+
+</form>

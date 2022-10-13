@@ -1,0 +1,9 @@
+.employee-item{
+    border: 1px solid #cfcfcf;
+    padding: 10px;
+    background-color: antiquewhite;
+    width: 25%;
+    float: left;
+    display: block;
+    margin: 5px;
+}

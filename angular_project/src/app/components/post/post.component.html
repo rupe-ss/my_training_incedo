@@ -1,0 +1,10 @@
+<app-post-stat></app-post-stat>
+<a routerLink="/post/add">+add Post</a>
+<div *ngFor="let post of posts" class="post-item">
+    {{post.title}} <br />
+    Posted By User ID: {{post.userId}} <a routerLink="/user/{{post.userId}}">Show Details</a>
+    <br />
+    <a routerLink="/post/one">Show Detailed Post</a> | <a routerLink="/comments/{{post.id}}">Show Comments</a>
+    <br />
+    <button (click)="deletePost(post.id)">Delete Post</button>
+</div>

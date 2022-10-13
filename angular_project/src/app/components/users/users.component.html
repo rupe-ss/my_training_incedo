@@ -1,0 +1,11 @@
+<app-user-stat></app-user-stat>
+<hr>
+<h1>All users</h1>
+<div *ngFor="let user of users" class="user-item">
+  {{user.name}} <br>
+  {{user.email}} <br>
+  Address: {{user.address.street}} <br>
+  Lat: {{user.address.geo.lat}} <br/>
+  Company: {{user.company.name}} <br>
+  <a href="Javascript:void(0)" (click)="deleteUser(user.id)">delete</a>
+</div>

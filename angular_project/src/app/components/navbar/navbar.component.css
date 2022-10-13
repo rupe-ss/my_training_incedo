@@ -1,0 +1,16 @@
+.navbar{
+    border-bottom: 1px solid gray;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.navbar a{
+    text-decoration: none;
+    color: black;
+}
+
+.navbar a:hover{
+    color: rgb(126, 103, 237);
+}
