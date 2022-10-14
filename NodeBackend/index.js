@@ -7,10 +7,6 @@ const fetch = require("node-fetch");
 //Cloud is going to give port number
 const PORT = process.env.PORT | 5000;
 
-app.listen(PORT, () => {
-  console.log("Server is running.");
-});
-
 /* Simple get API */
 app.get("/", (req, res) => {
   res.send({
@@ -39,4 +35,20 @@ app.get("/users/async", async (req, res) => {
   } catch (err) {
     res.send(400, { error_msg: err.msg });
   }
+});
+
+// API Middleware, comes into play while working with token
+app.use(
+  express.json({
+    extended: false,
+  })
+);
+
+app.use("/api/employee", require("./routes/api/employee"));
+app.use("/api/auth", require("./routes/api/auth"));
+app.use("/api/user", require("./routes/api/user"));
+app.use("/api/manager", require("./routes/api/manager"));
+
+app.listen(PORT, () => {
+  console.log("Server is running at PORT:5000");
 });
