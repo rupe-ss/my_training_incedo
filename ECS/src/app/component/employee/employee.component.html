@@ -1,0 +1,129 @@
+<div class="container">
+	<div class="dashboard">
+		<div class="fb-cell fb-cell--1">
+			<div class="fb-item">
+				<div class="sidebar">
+					<div class="avatar">
+						<img
+							src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200"
+						/>
+					</div>
+					<div class="info">
+						<span>Welcome {{ employee.name }}</span>
+						<br />
+						<span>Job Title: {{ employee.jobTitle }}</span>
+						<br />
+						<span>Manager: {{ employee.managerName }}</span>
+						<br />
+						<span>Email: {{ employee.email }}</span>
+					</div>
+					<div class="logout">
+						<a
+							routerLink="/"
+							style="
+								text-decoration: none;
+								border: 1px solid #ccc;
+							"
+							>Logout</a
+						>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="fb-cell fb-cell--2">
+			<div class="fb-item">
+				<div class="ticket-form">
+					<div class="form-header">
+						<h2>Generate Ticket</h2>
+					</div>
+					<div class="error-msg">
+						{{ msg }}
+					</div>
+					<div class="form-container">
+						<form
+							(submit)="onIssueSubmit()"
+							[formGroup]="ticketForm"
+						>
+							<div>
+								<textarea
+									formControlName="issue"
+									rows="10"
+									cols="50"
+									placeholder="Add Issue in detail"
+								></textarea>
+							</div>
+							<br />
+							<div>
+								<label>Select Priority:</label>
+								<select
+									formControlName="priority"
+									name="priority"
+									style="width: 100%"
+								>
+									<option
+										*ngFor="let p of priorities"
+										value="{{ p }}"
+									>
+										{{ p }}
+									</option>
+								</select>
+							</div>
+							<br />
+							<div>
+								<input
+									type="submit"
+									value="Generate Ticket"
+									[disabled]="!ticketForm.valid"
+								/>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="fb-cell fb-cell--3">
+			<div class="fb-item">
+				<div class="ticket-form">
+					<div class="form-header">
+						<h2>Apply Leave</h2>
+					</div>
+					<div>
+						<form [formGroup]="leaveForm" (submit)="onApplyLeave()">
+							<label>From Date: </label>
+							<input
+								type="date"
+								name="from"
+								formControlName="from"
+							/>
+							<br /><br />
+							<label>To Date: </label>
+							<input type="date" name="to" formControlName="to" />
+							<br /><br />
+							<label>Number of Days: </label>
+							<input type="text" formControlName="numDays" />
+							<br /><br />
+							<input
+								type="submit"
+								value="Apply Leave"
+								[disabled]="!leaveForm.valid"
+							/>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="fb-cell fb-cell--4">
+			<div class="fb-item">
+				<ul>
+					<li *ngFor="let leave of leaveArray">
+						{{ leave.from }} -- {{ leave.to }} :
+						{{ leave.numDays }} days
+						<span *ngIf="leave.status === 'PENDING'"
+							>: {{ leave.status }}</span
+						>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
