@@ -7,6 +7,7 @@ import { Ticket } from 'src/app/models/ticket.model';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { UserService } from 'src/app/services/user.service';
 import { priority } from '../../data/data';
+import * as _ from 'lodash';
 
 @Component({
 	selector: 'app-employee',
@@ -90,7 +91,7 @@ export class EmployeeComponent implements OnInit {
 			next: (data) => {
 				this.leave = data;
 				this.leaveMsg = 'Leave applied sucessfully';
-				this.leaveArray.push(this.leave);
+				this.leaveArray.unshift(this.leave);
 			},
 			error: (err) => {
 				this.leaveErrorMsg = 'Could not apply leave, please try later';
