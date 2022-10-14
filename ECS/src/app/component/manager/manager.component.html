@@ -1,1 +1,83 @@
-<p>manager works!</p>
+<div class="container">
+	<div class="dashboard">
+		<div class="fb-cell fb-cell--1">
+			<div class="fb-item">
+				<div class="sidebar">
+					<div class="avatar">
+						<img
+							src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200"
+						/>
+					</div>
+					<div class="info">
+						<span>Welcome {{ manager.name }}</span>
+						<br />
+						<span>Department: </span>
+						<br />
+						<span>Email: {{ manager.email }}</span>
+					</div>
+					<div class="logout">
+						<a
+							routerLink="/"
+							style="
+								text-decoration: none;
+								border: 1px solid #ccc;
+							"
+							>Logout</a
+						>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="fb-cell fb-cell--2">
+			<div class="fb-item">
+				<div class="leave-request">
+					<div class="form-header">
+						<h2>Pending Leave Application</h2>
+					</div>
+					<div class="decision-container">
+						<ul>
+							<li
+								*ngFor="let lr of leaveRequests"
+								class="leave-requests"
+							>
+								<div>{{ lr.name }}</div>
+								<div>Leave Requested: {{ lr.noOfDays }}</div>
+								<button
+									style="margin-right: 2rem"
+									(click)="confirmRequest()"
+									value=
+								>
+									Confirm
+								</button>
+								<button (click)="denyRequest()">Deny</button>
+							</li>
+						</ul>
+					</div>
+					<div>From: To</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="fb-cell fb-cell--3">
+			<div class="fb-item">
+				<div class="access-request">
+					<div class="form-header">
+						<h2>Employee Access Requests</h2>
+					</div>
+					<ul>
+						<li>
+							John Doe
+							<span style="margin-left: 2rem">Developer</span>
+							<button
+								style="margin-right: 2rem; margin-left: 2rem"
+							>
+								Accept
+							</button>
+							<button>Reject</button>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
