@@ -1,3 +1,4 @@
+import { AccessRequest } from '../models/accessRequest.model';
 import { Leave } from '../models/leave.model';
 import { LeaveRequest } from '../models/leaveRequest.model';
 import { Manager } from '../models/manager.model';
@@ -48,15 +49,38 @@ export const leaves: Leave[] = [
 
 export const leaveRequests: LeaveRequest[] = [
 	{
+		id: 111,
 		name: 'John Doe',
+		email: 'john@incedo.com',
 		noOfDays: 2,
 		from: '12-11-2022',
 		to: '12-12-2022',
+		status: 'PENDING',
 	},
 	{
+		id: 222,
 		name: 'Mary Jane',
+		email: 'mary@incedo.com',
 		noOfDays: 3,
 		from: '11-15-2022',
 		to: '11-17-2022',
+		status: 'PENDING',
+	},
+];
+
+export const accessRequests: AccessRequest[] = [
+	{
+		id: 123,
+		name: 'Ryan Snow',
+		email: 'ryan@incedo.com',
+		jobTitle: 'Developer',
+		status: 'PENDING',
+	},
+	{
+		id: 456,
+		name: 'Cole Nichol',
+		email: 'cole@incedo.com',
+		jobTitle: 'Tester',
+		status: 'PENDING',
 	},
 ];

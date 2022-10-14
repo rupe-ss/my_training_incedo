@@ -35,25 +35,43 @@
 						<h2>Pending Leave Application</h2>
 					</div>
 					<div class="decision-container">
+						<div>{{ leaveEmptymsg }}</div>
 						<ul>
+							<div>{{ leaveMsg }}</div>
 							<li
 								*ngFor="let lr of leaveRequests"
 								class="leave-requests"
 							>
-								<div>{{ lr.name }}</div>
-								<div>Leave Requested: {{ lr.noOfDays }}</div>
-								<button
-									style="margin-right: 2rem"
-									(click)="confirmRequest()"
-									value=
-								>
-									Confirm
-								</button>
-								<button (click)="denyRequest()">Deny</button>
+								<div class="leave-request --cell">
+									<div style="flex-basis: 100px">
+										{{ lr.name }}
+									</div>
+									<div style="flex-basis: 200px">
+										Leave Requested: {{ lr.noOfDays }}
+									</div>
+									<button
+										style="
+											margin-right: 2rem;
+											flex-basis: 70px;
+										"
+										(click)="
+											requestDecision(lr.id, 'confirm')
+										"
+									>
+										CONFIRM
+									</button>
+									<button
+										style="flex-basis: 70px"
+										(click)="requestDecision(lr.id, 'deny')"
+									>
+										DENY
+									</button>
+								</div>
+								<div>From: {{ lr.from }} To: {{ lr.to }}</div>
+								<br />
 							</li>
 						</ul>
 					</div>
-					<div>From: To</div>
 				</div>
 			</div>
 		</div>
@@ -65,9 +83,11 @@
 						<h2>Employee Access Requests</h2>
 					</div>
 					<ul>
-						<li>
-							John Doe
-							<span style="margin-left: 2rem">Developer</span>
+						<li *ngFor="let request of accessRequests">
+							{{ request.name }}
+							<span style="margin-left: 2rem">{{
+								request.jobTitle
+							}}</span>
 							<button
 								style="margin-right: 2rem; margin-left: 2rem"
 							>

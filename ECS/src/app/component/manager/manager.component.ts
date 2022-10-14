@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { AccessRequest } from 'src/app/models/accessRequest.model';
 import { LeaveRequest } from 'src/app/models/leaveRequest.model';
 import { Manager } from 'src/app/models/manager.model';
 import { ManagerService } from 'src/app/services/manager.service';
@@ -12,10 +13,15 @@ import { UserService } from 'src/app/services/user.service';
 	styleUrls: ['./manager.component.css'],
 })
 export class ManagerComponent implements OnInit, OnDestroy {
-	msg: string = '';
+	leaveMsg: string = '';
+	leaveEmptymsg: string = '';
+	requestMsg: string = '';
+	requestEmptymsg: string = '';
+	requestEmail: string;
 	ticketForm: FormGroup;
 	manager: Manager;
 	leaveRequests: LeaveRequest[];
+	accessRequests: AccessRequest[];
 	leaveRequestMsg: string = '';
 	subscription: Subscription[] = [];
 
@@ -48,11 +54,35 @@ export class ManagerComponent implements OnInit, OnDestroy {
 				this.leaveRequestMsg = 'Could not load leave requests.';
 			},
 		});
+
+		this.managerService.getAllAccessRequests().subscribe({
+			next: (data) => {
+				this.accessRequests = data;
+			},
+			error: (err) => {
+				this.requestMsg = 'Could not load leave requests.';
+			},
+		});
 	}
 
-	confirmRequest() {
-		console.log(this.manager.email);
-	}
+	requestDecision(requestId: number, decision: string) {
+		this.managerService.confirmRequest(requestId, decision).subscribe({
+			next: (data) => {
+				this.leaveRequests = this.leaveRequests.filter(
+					(request) => request.id != requestId
+				);
+				decision === 'confirm'
+					? (this.leaveMsg = 'Request CONFIRMED')
+					: (this.leaveMsg = 'Request DENY');
 
-	denyRequest() {}
+				if (this.leaveRequests.length == 0) {
+					this.leaveEmptymsg = 'No more Requests';
+					this.leaveMsg = '';
+				}
+			},
+			error: (err) => {
+				this.leaveMsg = 'Something went wrong';
+			},
+		});
+	}
 }

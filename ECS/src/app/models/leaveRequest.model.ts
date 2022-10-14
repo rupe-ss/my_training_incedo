@@ -5,4 +5,5 @@ export class LeaveRequest {
 	noOfDays: number;
 	from: string | Date;
 	to: string | Date;
+	status: string;
 }
