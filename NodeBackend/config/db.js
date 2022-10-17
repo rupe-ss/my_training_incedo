@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 dbConnect = () => {
   try {
     mongoose.connect(
-      "mongodb+srv://rupesh:*#Cluster09@cluster0.zipbakq.mongodb.net/?retryWrites=true&w=majority",
+      "mongodb+srv://rupesh:Password123@cluster0.cezjfgg.mongodb.net/?retryWrites=true&w=majority",
+      { useNewUrlParser: true, useUnifiedTopology: true },
       () => {
         console.log("MongoDB Connected...");
       }

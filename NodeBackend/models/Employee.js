@@ -22,6 +22,9 @@ const EmployeeSchema = new mongoose.Schema({
   role: {
     type: String,
   },
+  status: {
+    type: String,
+  },
 });
 
 module.exports = Employee = mongoose.model("employee", EmployeeSchema);
