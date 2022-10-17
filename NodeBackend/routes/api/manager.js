@@ -1,15 +1,16 @@
 const express = require("express");
+const Manager = require("../../models/Manager");
 const User = require("../../models/User");
 const router = express.Router();
-const Manager = require("../../models/Employee");
 const bcrypt = require("bcryptjs");
 
 router.get("/", (req, res) => {
-  res.send("manager / API Called..");
+  res.send("manager / called..");
 });
 
-/*  @Path: /api/employee/add
-    @body: name*, jobTitle*, email*, password*, imageUrl
+/* 
+   @Path: /api/manager/add 
+   @body: name*, jobTitle*,email*,password*,imageUrl 
 */
 router.post("/add", async (req, res) => {
   const { name, jobTitle, email, password, imageUrl } = req.body;
@@ -32,13 +33,13 @@ router.post("/add", async (req, res) => {
   let salt = bcrypt.genSaltSync(10);
   let hashPassword = bcrypt.hashSync(password, salt);
 
-  /* Assign hashed password to user Object*/
+  /* Assign hashed password to user object */
   user.password = hashPassword;
 
   manager = await manager.save();
   user = await user.save();
 
-  res.send(manager);
+  res.json(manager);
 });
 
 module.exports = router;
