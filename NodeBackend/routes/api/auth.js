@@ -55,7 +55,9 @@ router.get("/user", auth, async (req, res) => {
     const user = await User.findById(id);
     const role = user.role;
     if (role == "EMPLOYEE") {
-      const employee = await Employee.findOne({ email: user.email });
+      const employee = await Employee.findOne({ email: user.email }).select(
+        "-status"
+      );
       const manager = await Manager.findOne({
         email: employee.managerEmail,
       });
