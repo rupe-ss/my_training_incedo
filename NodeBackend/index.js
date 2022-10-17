@@ -3,9 +3,13 @@ const express = require("express"); //commonJs(90% Developers) or ecmaScript
 const app = express(); //app represents express for us.
 const func = require("./functions");
 const fetch = require("node-fetch");
+const { dbConnect } = require("./config/db");
 
 //Cloud is going to give port number
 const PORT = process.env.PORT | 5000;
+
+/*Connect a MongoDB */
+dbConnect();
 
 /* Simple get API */
 app.get("/", (req, res) => {
