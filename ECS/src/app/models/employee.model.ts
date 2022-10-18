@@ -1,11 +1,12 @@
 export class Employee {
-	id?: number;
+	id?: number | string;
 	name: string;
 	jobTitle: string;
-	managerId?: number;
+	managerEmail?: number;
 	managerName?: string;
 	email: string;
 	password?: string;
 	imageUrl?: string;
 	role?: string;
+	managerId?: string;
 }

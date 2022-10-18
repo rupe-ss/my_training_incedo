@@ -19,19 +19,28 @@ export class SignUpComponent implements OnInit {
 		'DevOps Engineer',
 		'Tester',
 	];
-	managers: Manager[] = managers;
+	managers: Manager[];
 	employee: Employee;
 	msg: string = '';
 	constructor(private userService: UserService, private router: Router) {}
 
 	ngOnInit(): void {
+		this.userService.getAllManagers().subscribe({
+			next: (data) => {
+				this.managers = data;
+			},
+			error: (error) => {
+				this.msg = error.error.msg;
+			},
+		});
+
 		this.signUpForm = new FormGroup({
 			name: new FormControl('', [
 				Validators.required,
 				Validators.pattern(/^[a-zA-Z ]+$/),
 			]),
 			jobTitle: new FormControl('', Validators.required),
-			manager: new FormControl('', Validators.required),
+			managerEmail: new FormControl('', Validators.required),
 			email: new FormControl('', [
 				Validators.required,
 				Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/),
@@ -62,15 +71,16 @@ export class SignUpComponent implements OnInit {
 			jobTitle: this.signUpForm.value.jobTitle,
 			email: this.signUpForm.value.email,
 			password: this.signUpForm.value.password,
-			managerId: this.signUpForm.value.manager,
+			managerEmail: this.signUpForm.value.managerEmail,
 		};
 
 		this.userService.signUp(this.employee).subscribe({
 			next: (data) => {
+				this.userService.msg$.next('SignUp Success');
 				this.router.navigateByUrl('/');
 			},
 			error: (error) => {
-				this.msg = 'Sign Up not possible at this time';
+				this.msg = error.error.msg;
 			},
 		});
 	}

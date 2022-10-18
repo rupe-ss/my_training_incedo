@@ -1,15 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Employee } from '../models/employee.model';
 import { Login } from '../models/login.models';
+import { Manager } from '../models/manager.model';
 import { UserInfo } from '../models/user.model';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class UserService {
+	msg$ = new BehaviorSubject<string>('');
 	constructor(private http: HttpClient) {}
 
 	/*This will call API to get a token based on email and password */
@@ -45,10 +47,20 @@ export class UserService {
 		});
 	}
 
-	signUp(employee: Employee) {
-		return Observable.create((observer) => {
-			observer.next('');
-			observer.complete();
-		});
+	// signUp(employee: Employee) {
+	// 	return Observable.create((observer) => {
+	// 		observer.next('');
+	// 		observer.complete();
+	// 	});
+	// }
+	public signUp(employee: Employee): Observable<any> {
+		return this.http.post<any>(
+			environment.serverUrl + '/employee/add',
+			employee
+		);
+	}
+
+	public getAllManagers(): Observable<Manager[]> {
+		return this.http.get<Manager[]>(environment.serverUrl + '/manager/all');
 	}
 }

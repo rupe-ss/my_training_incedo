@@ -55,8 +55,8 @@
 
 		<div class="form-group">
 			<label>Manager: </label>
-			<select class="form-input" formControlName="manager">
-				<option *ngFor="let m of managers" value="{{ m.id }}">
+			<select class="form-input" formControlName="managerEmail">
+				<option *ngFor="let m of managers" value="{{ m.email }}">
 					{{ m.name }}
 				</option>
 			</select>
