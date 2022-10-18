@@ -10,7 +10,7 @@ const TicketSchema = new mongoose.Schema({
   email: {
     type: String,
   },
-  resposne: {
+  response: {
     type: String,
   },
   status: {

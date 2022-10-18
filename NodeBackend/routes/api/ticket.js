@@ -41,7 +41,7 @@ router.post("/add", auth, async (req, res) => {
 router.get("/all", auth, async (req, res) => {
   const { id } = req.user;
   const user = await User.findById(id);
-  /* Read email from thr token */
+  /* Read email from the token */
   const email = user.email;
 
   if (!(user.role === "MANAGER"))
@@ -59,6 +59,32 @@ router.get("/all", auth, async (req, res) => {
     tickets = [...tickets, ...ticketArray];
   }
   res.send(tickets);
+});
+
+/* 
+   @Path: /api/ticket/response
+   @token: managerEmail
+   @body: ticketId*, response*
+   @Description: Manager will provide response to the created ticket
+*/
+router.put("/response", auth, async (req, res) => {
+  const { id } = req.user;
+  const user = await User.findById(id);
+
+  /* Read email from the token */
+  const email = user.email;
+
+  if (!(user.role === "MANAGER"))
+    return res.send(401).json({ msg: "Unauthorized" });
+
+  const { ticketId, response } = req.body;
+  let ticket = await Ticket.findById(ticketId);
+
+  ticket.response = response;
+
+  ticket = await ticket.save();
+
+  res.send(ticket);
 });
 
 module.exports = router;
