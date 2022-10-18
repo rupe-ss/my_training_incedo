@@ -4,8 +4,13 @@ const User = require("../../models/User");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 
-router.get("/", (req, res) => {
-  res.send("manager / called..");
+/* 
+   @Path: /api/manager/add 
+   @payload: name*, jobTitle*,email*,imageUrl 
+*/
+router.get("/all", async (req, res) => {
+  const manager = await Manager.find();
+  res.send(manager);
 });
 
 /* 

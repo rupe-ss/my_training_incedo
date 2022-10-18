@@ -6,8 +6,16 @@ const bcrypt = require("bcryptjs");
 const { body, validationResult } = require("express-validator");
 const Manager = require("../../models/Manager");
 
-router.get("/", (req, res) => {
-  res.send("employee / called..");
+/* 
+   @Path: /api/employee/all:managerEmail
+   @response: all employees that works with 'managerEmail'
+*/
+router.get("/all/:managerEmail", async (req, res) => {
+  const managerEmail = req.params["managerEmail"];
+  const employee = await Employee.find({ managerEmail }).select(
+    "-managerEmail"
+  );
+  res.send(employee);
 });
 
 /* 
