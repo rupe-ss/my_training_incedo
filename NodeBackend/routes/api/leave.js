@@ -96,7 +96,7 @@ router.post("/comment", auth, async (req, res) => {
 });
 
 /* 
-   @Path: /api/leave/all/:managerEmail
+   @Path: /api/leave/all
    @Get
 */
 router.get("/all", auth, async (req, res) => {

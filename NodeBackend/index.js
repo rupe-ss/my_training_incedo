@@ -56,6 +56,7 @@ app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/user", require("./routes/api/user"));
 app.use("/api/manager", require("./routes/api/manager"));
 app.use("/api/leave", require("./routes/api/leave"));
+app.use("/api/ticket", require("./routes/api/Ticket"));
 
 app.listen(PORT, () => {
   console.log(`Server is running at PORT: ${5000}`);
