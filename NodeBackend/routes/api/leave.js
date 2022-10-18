@@ -85,12 +85,39 @@ router.get(
 */
 router.post("/comment", auth, async (req, res) => {
   const { comment, leaveId } = req.body;
+
+  /* Fetch leave data*/
   let leave = await Leave.findById(leaveId);
   leave.comments = comment;
 
   leave = await leave.save();
 
   res.status(200).json({ msg: "Comments Added" });
+});
+
+/* 
+   @Path: /api/leave/all/:managerEmail
+   @Get
+*/
+router.get("/all", auth, async (req, res) => {
+  const { id } = req.user;
+  const user = await User.findById(id);
+  const managerEmail = user.email;
+  if (!(user.role === "MANAGER")) {
+    res.status(401).json({ msg: "Unauthorized" });
+  }
+
+  let leaves = [];
+  /* Fetch all employees havind managerEmail as user.email*/
+  const employees = await Employee.find({ managerEmail: user.email });
+  for (let e of employees) {
+    /*For each employeee, fetch all pending leaves */
+    let leaveArray = await Leave.find({
+      $and: [{ email: e.email }, { status: "PENDING" }],
+    });
+    leaves = [...leaves, ...leaveArray];
+  }
+  res.send(leaves);
 });
 
 module.exports = router;
