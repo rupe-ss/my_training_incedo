@@ -4,6 +4,7 @@ const app = express(); //app represents express for us.
 const func = require("./functions");
 const fetch = require("node-fetch");
 const { dbConnect } = require("./config/db");
+const cors = require("cors");
 
 //Cloud is going to give port number
 const PORT = process.env.PORT | 5000;
@@ -47,6 +48,8 @@ app.use(
     extended: false,
   })
 );
+/* Try to  */
+app.use(cors());
 
 app.use("/api/employee", require("./routes/api/employee"));
 app.use("/api/auth", require("./routes/api/auth"));

@@ -10,7 +10,6 @@ router.get("/", (req, res) => {
 
 router.get("/grant-access/:email", auth, async (req, res) => {
   const email = req.params["email"];
-  console.log(email);
   const { id } = req.user;
   try {
     const user = await User.findById(id);

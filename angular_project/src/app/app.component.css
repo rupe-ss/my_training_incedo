@@ -1,9 +1,7 @@
-.employee-item{
-    border: 1px solid #cfcfcf;
-    padding: 10px;
-    background-color: antiquewhite;
-    width: 25%;
-    float: left;
-    display: block;
-    margin: 5px;
+body {
+  margin: 0px;
+  padding: 0px;
+  height: 100%;
+  width: 100%;
+  border: 2px solid rgb(156, 181, 80);
 }
