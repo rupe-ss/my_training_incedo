@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Employee } from '../models/employee.model';
 import { Login } from '../models/login.models';
 import { UserInfo } from '../models/user.model';
@@ -8,18 +10,25 @@ import { UserInfo } from '../models/user.model';
 	providedIn: 'root',
 })
 export class UserService {
-	constructor() {}
+	constructor(private http: HttpClient) {}
 
-	login(login: Login): Observable<string> {
-		let token = btoa(login.email + ':' + login.password);
-		return Observable.create((observer) => {
-			observer.next(token);
-			observer.complete();
-		});
+	/*This will call API to get a token based on email and password */
+	// login(login: Login): Observable<string> {
+	// 	let token = btoa(login.email + ':' + login.password);
+	// 	return Observable.create((observer) => {
+	// 		observer.next(token);
+	// 		observer.complete();
+	// 	});
 
-		/*
-    Call get API for login
-    */
+	// 	/*
+	// Call get API for login
+	// */
+	// }
+	login(login: Login) {
+		return this.http.post<string>(
+			environment.serverUrl + '/auth/login',
+			login
+		);
 	}
 
 	getUser(token: string): Observable<UserInfo> {
