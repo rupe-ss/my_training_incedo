@@ -25,6 +25,14 @@ const EmployeeSchema = new mongoose.Schema({
   status: {
     type: String,
   },
+  totalLeaves: {
+    type: Number,
+    default: 20,
+  },
+  leavesLeft: {
+    type: Number,
+    default: 20,
+  },
 });
 
 module.exports = Employee = mongoose.model("employee", EmployeeSchema);
