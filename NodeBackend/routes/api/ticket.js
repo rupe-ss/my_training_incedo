@@ -87,4 +87,51 @@ router.put("/response", auth, async (req, res) => {
   res.send(ticket);
 });
 
+/* 
+   @Path: /api/ticket/status/update
+   @body: ticketId*, status*, employee email: from token
+   @Description: Employee will CLOSE the genrated ticket.
+*/
+router.put("/status/update", auth, async (req, res) => {
+  const { id } = req.user;
+  const user = await User.findById(id);
+
+  /* Read email from the token */
+  const email = user.email;
+
+  const { ticketId, status } = req.body;
+
+  let ticket = await Ticket.findById(ticketId);
+  /*Verify the emails from token and ticket*/
+  if (!(email === ticket.email))
+    return res.status(403).json({ msg: "Forbidden" });
+
+  ticket.status = status;
+
+  ticket = await ticket.save();
+  res.send(ticket);
+});
+
+/* 
+   @Path: /api/ticket/status/:status
+   @inputs: employee email: from token
+   @Description: Employee will see all the tickets(OPEN/CLOSE)
+*/
+router.get("/status/:status", auth, async (req, res) => {
+  const { id } = req.user;
+  const user = await User.findById(id);
+
+  const status = req.params["status"];
+
+  let ticket = await Ticket.find({
+    $and: [{ email: user.email }, { status: status }],
+  });
+
+  res.send(ticket);
+});
+
+router.get("/", (req, res) => {
+  res.send("ticket / API Called..");
+});
+
 module.exports = router;
