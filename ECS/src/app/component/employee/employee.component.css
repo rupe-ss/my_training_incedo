@@ -43,22 +43,6 @@
 	display: flex;
 	justify-content: center;
 }
-.sidebar {
-	margin: 10%;
-	flex-direction: column;
-}
-.avatar {
-	margin-bottom: 2rem;
-}
-.avatar img {
-	border-radius: 20%;
-}
-.info {
-	font-size: 1rem;
-	font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-		"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-	line-height: 2;
-}
 
 .ticket-form {
 	display: flex;

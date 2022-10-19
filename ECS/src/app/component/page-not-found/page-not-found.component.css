@@ -1,0 +1,8 @@
+.png {
+	border: 1px solid #ccc;
+	padding: 15px;
+	width: 350px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

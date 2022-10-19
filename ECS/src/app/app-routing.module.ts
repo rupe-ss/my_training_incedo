@@ -6,7 +6,7 @@ import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { EmployeeComponent } from './component/employee/employee.component';
 import { ManagerComponent } from './component/manager/manager.component';
 import { AuthGuardService } from './services/auth-guard.service';
-import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { PageNotFoundComponent } from './component/page-not-found/page-not-found.component';
 
 const routes: Routes = [
 	{ path: '', component: LoginComponent },

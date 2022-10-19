@@ -1,0 +1,21 @@
+<div class="sidebar">
+	<div class="avatar">
+		<img
+			src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200"
+		/>
+	</div>
+	<div class="info">
+		<span>Welcome {{ employee.name }}</span>
+		<br />
+		<span>Job Title: {{ employee.jobTitle }}</span>
+		<br />
+		<span>Manager: {{ employee.managerName }}</span>
+		<br />
+		<span>Email: {{ employee.email }}</span>
+	</div>
+	<div class="logout">
+		<a routerLink="/" style="text-decoration: none; border: 1px solid #ccc"
+			>Logout</a
+		>
+	</div>
+</div>

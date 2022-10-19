@@ -9,8 +9,12 @@ import { HomeComponent } from './component/home/home.component';
 import { EmployeeComponent } from './component/employee/employee.component';
 import { ManagerComponent } from './component/manager/manager.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { PageNotFoundComponent } from './component/page-not-found/page-not-found.component';
 import { HttpClientModule } from '@angular/common/http';
+import { InfoComponent } from './component/employee/info/info.component';
+import { LeaveComponent } from './component/employee/leave/leave.component';
+import { ListComponent } from './component/employee/list/list.component';
+import { TicketComponent } from './component/employee/ticket/ticket.component';
 
 @NgModule({
 	declarations: [
@@ -21,6 +25,10 @@ import { HttpClientModule } from '@angular/common/http';
 		EmployeeComponent,
 		ManagerComponent,
 		PageNotFoundComponent,
+  InfoComponent,
+  LeaveComponent,
+  ListComponent,
+  TicketComponent,
 	],
 	imports: [
 		BrowserModule,
