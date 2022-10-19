@@ -34,16 +34,21 @@ export class UserService {
 	}
 
 	getUser(token: string): Observable<UserInfo> {
-		let user: UserInfo = {
-			name: 'Harry Potter',
-			email: 'harry@gmail.com',
-			jobTitle: 'Developer',
-			managerName: 'Albus Dumledore',
-			role: 'MANAGER',
-		};
-		return Observable.create((observer) => {
-			observer.next(user);
-			observer.complete();
+		// let user: UserInfo = {
+		// 	name: 'Harry Potter',
+		// 	email: 'harry@gmail.com',
+		// 	jobTitle: 'Developer',
+		// 	managerName: 'Albus Dumledore',
+		// 	role: 'MANAGER',
+		// };
+		const header = { 'x-auth-token': localStorage.getItem('token') };
+		this.http
+			.get<UserInfo>(environment.serverUrl + '/auth/user', {
+				headers: header,
+			})
+			.subscribe((data) => {});
+		return this.http.get<UserInfo>(environment.serverUrl + '/auth/user', {
+			headers: header,
 		});
 	}
 

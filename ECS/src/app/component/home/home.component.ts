@@ -4,30 +4,29 @@ import { UserInfo } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+	selector: 'app-home',
+	templateUrl: './home.component.html',
+	styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
+	user: UserInfo;
 
-  user: UserInfo;
+	constructor(private userService: UserService, private router: Router) {}
 
-  constructor(private userService: UserService, private router: Router) { }
-
-  ngOnInit(): void {
-
-    this.userService.getUser(localStorage.getItem('token'))
-        .subscribe({
-          next: (data)=> { this.user = data;
-            if(this.user.role == 'EMPLOYEE')
-              this.router.navigateByUrl('/employee');
-            else
-              this.router.navigateByUrl('/manager');
-          },
-          error: (error)=> {
-            this.router.navigateByUrl('/');
-          }
-        })
-  }
-
+	ngOnInit(): void {
+		this.userService.getUser(localStorage.getItem('token')).subscribe({
+			next: (data) => {
+				console.log('data->' + data);
+				this.user = data;
+				if (this.user.role == 'EMPLOYEE')
+					this.router.navigateByUrl('/employee');
+				else this.router.navigateByUrl('/manager');
+			},
+			error: (error) => {
+				this.userService.msg$.next(error.error.msg$);
+				console.log(error);
+				this.router.navigateByUrl('/');
+			},
+		});
+	}
 }

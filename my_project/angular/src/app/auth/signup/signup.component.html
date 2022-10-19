@@ -1,0 +1,58 @@
+<section>
+  <form
+    class="form-container"
+    (submit)="onFormSubmit()"
+    [formGroup]="signUpForm"
+  >
+    <div class="form-header">
+      <span>SignUp</span>
+    </div>
+
+    <div class="form-group">
+      <label>Firstname: </label>
+      <input type="name" class="form-input" formControlName="firstname" />
+    </div>
+
+    <div class="form-group">
+      <label>Lastname: </label>
+      <input type="name" class="form-input" formControlName="lastname" />
+    </div>
+
+    <div class="form-group">
+      <label>City: </label>
+      <input type="name" class="form-input" formControlName="city" />
+    </div>
+
+    <div class="form-group">
+      <label>State: </label>
+      <input type="name" class="form-input" formControlName="state" />
+    </div>
+
+    <div class="form-group">
+      <label>Email: </label>
+      <input type="email" class="form-input" formControlName="email" />
+    </div>
+
+    <div class="form-group">
+      <label>Password: </label>
+      <input type="password" class="form-input" formControlName="password" />
+    </div>
+
+    <div class="form-group">
+      <label>Re-Enter Password: </label>
+      <input type="password" class="form-input" formControlName="repassword" />
+    </div>
+
+    <div class="form-group">
+      <input
+        type="submit"
+        class="login-button"
+        value="Sign Up"
+        style="color: white"
+      />
+    </div>
+    <div class="form-footer">
+      Already Signed Up? <a routerLink="/">Login here</a>
+    </div>
+  </form>
+</section>
