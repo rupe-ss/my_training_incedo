@@ -1,27 +1,64 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { leaves } from '../data/data';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Leave } from '../models/leave.model';
-
+import { Ticket } from '../models/ticket.model';
+import { leaves } from '../data/data';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 @Injectable({
-  providedIn: 'root',
+	providedIn: 'root',
 })
 export class EmployeeService {
-  constructor() {}
+	leaveApplied$ = new BehaviorSubject<Leave>({});
+	ticketCreated$ = new BehaviorSubject<Ticket>({});
 
-  applyLeave(leave: Leave): Observable<Leave> {
-    return Observable.create((observer) => {
-      leave.id = Math.round(Math.random() * 100);
-      leave.status = 'PENDING';
-      observer.next(leave);
-      observer.complete();
-    });
-  }
+	constructor(private http: HttpClient) {}
 
-  getAllLeaves(): Observable<Leave[]> {
-    return Observable.create((observer) => {
-      observer.next(leaves);
-      observer.complete();
-    });
-  }
+	public postTicket(ticket: Ticket): Observable<Ticket> {
+		const header = { 'x-auth-token': localStorage.getItem('token') };
+		return this.http.post<Ticket>(
+			environment.serverUrl + '/ticket/add',
+			ticket,
+			{ headers: header }
+		);
+	}
+
+	public applyLeave(leave: Leave): Observable<Leave> {
+		const header = { 'x-auth-token': localStorage.getItem('token') };
+		return this.http.post<Leave>(
+			environment.serverUrl + '/leave/add',
+			leave,
+			{ headers: header }
+		);
+	}
+
+	public getAllLeaves(status): Observable<Leave[]> {
+		const header = { 'x-auth-token': localStorage.getItem('token') };
+		return this.http.get<Leave[]>(
+			environment.serverUrl + '/leave/employee/all/' + status,
+			{ headers: header }
+		);
+	}
+
+	public fetchTickets(status: string): Observable<Ticket[]> {
+		const header = { 'x-auth-token': localStorage.getItem('token') };
+		return this.http.get<Ticket[]>(
+			environment.serverUrl + '/ticket/status/' + status,
+			{ headers: header }
+		);
+	}
+
+	public updateTicketStatus(id: string, status: string): Observable<any> {
+		let obj = {
+			ticketId: id,
+			status: status,
+		};
+		const header = { 'x-auth-token': localStorage.getItem('token') };
+
+		return this.http.put<any>(
+			environment.serverUrl + '/ticket/status/update',
+			obj,
+			{ headers: header }
+		);
+	}
 }

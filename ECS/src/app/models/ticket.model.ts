@@ -1,6 +1,9 @@
 export class Ticket {
-  id?: number | string;
-  issue: string;
-  priority: string;
-  email: string;
+	_id?: string;
+	issue?: string;
+	priority?: string;
+	email?: string;
+	genaratedDate?: string;
+	status?: string;
+	response?: string;
 }

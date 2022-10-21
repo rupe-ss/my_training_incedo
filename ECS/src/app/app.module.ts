@@ -15,6 +15,10 @@ import { InfoComponent } from './component/employee/info/info.component';
 import { LeaveComponent } from './component/employee/leave/leave.component';
 import { ListComponent } from './component/employee/list/list.component';
 import { TicketComponent } from './component/employee/ticket/ticket.component';
+import { ManagerAccessComponent } from './component/manager/access/access.component';
+import { ManagerLeavesComponent } from './component/manager/leaves/leaves.component';
+import { ManagerInfoComponent } from './component/manager/info/info.component';
+import { ManagerTicketComponent } from './component/manager/ticket/ticket.component';
 
 @NgModule({
 	declarations: [
@@ -25,10 +29,14 @@ import { TicketComponent } from './component/employee/ticket/ticket.component';
 		EmployeeComponent,
 		ManagerComponent,
 		PageNotFoundComponent,
-  InfoComponent,
-  LeaveComponent,
-  ListComponent,
-  TicketComponent,
+		InfoComponent,
+		LeaveComponent,
+		ListComponent,
+		TicketComponent,
+		ManagerAccessComponent,
+		ManagerLeavesComponent,
+		ManagerInfoComponent,
+		ManagerTicketComponent,
 	],
 	imports: [
 		BrowserModule,

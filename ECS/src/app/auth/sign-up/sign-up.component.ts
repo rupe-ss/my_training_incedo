@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { Employee } from 'src/app/models/employee.model';
 import { Manager } from 'src/app/models/manager.model';
 import { UserService } from 'src/app/services/user.service';
-import { managers } from '../../data/data';
 @Component({
 	selector: 'app-sign-up',
 	templateUrl: './sign-up.component.html',

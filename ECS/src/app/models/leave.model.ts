@@ -1,9 +1,12 @@
-export class Leave{
-    id?: number | string;
-    to: string | Date;
-    from: string | Date;
-    email?: string;
-    year?: number | string;
-    numDays: number;
-    status?: string;
+export class Leave {
+	_id?: string;
+	to?: string;
+	from?: string;
+	email?: string;
+	year?: string;
+	days?: number;
+	status?: string;
+	comments?: string;
+	leavesLeft?: number;
+	name?: string;
 }

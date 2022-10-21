@@ -5,12 +5,25 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const { body, validationResult } = require("express-validator");
 const Manager = require("../../models/Manager");
+const auth = require("../../middleware/auth");
 
 /* 
    @Path: /api/employee/all:managerEmail
    @response: all employees that works with 'managerEmail'
 */
 router.get("/all/:managerEmail", async (req, res) => {
+  const managerEmail = req.params["managerEmail"];
+  const employee = await Employee.find({ managerEmail }).select(
+    "-managerEmail"
+  );
+  res.send(employee);
+});
+
+/* 
+   @Path: /api/employee/all:managerEmail
+   @response: all employees that works with 'managerEmail'
+*/
+router.get("/all/access", auth, async (req, res) => {
   const managerEmail = req.params["managerEmail"];
   const employee = await Employee.find({ managerEmail }).select(
     "-managerEmail"

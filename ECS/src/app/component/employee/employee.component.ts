@@ -1,49 +1,37 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Employee } from 'src/app/models/employee.model';
 import { Leave } from 'src/app/models/leave.model';
 import { Ticket } from 'src/app/models/ticket.model';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { UserService } from 'src/app/services/user.service';
 import { priority } from '../../data/data';
-import * as _ from 'lodash';
-
 @Component({
 	selector: 'app-employee',
 	templateUrl: './employee.component.html',
 	styleUrls: ['./employee.component.css'],
 })
-export class EmployeeComponent implements OnInit {
-	msg: string = '';
-	ticketForm: FormGroup;
-	priorities: string[] = priority;
-	leaveForm: FormGroup;
-	leave: Leave;
-	ticket: Ticket;
+export class EmployeeComponent implements OnInit, OnDestroy {
 	employee: Employee;
-	leaveArray: Leave[];
-	leaveMsg: string;
-	leaveErrorMsg: string;
+
+	priority: string[] = priority;
+	msg: string = '';
+	ticket: Ticket;
+	tickets: Ticket[] = [];
+	leave: Leave;
+	leaveMsg: string = '';
+	leaveArry: Leave[];
+	leaveErrorMsg: string = '';
+	subscription: Subscription[] = [];
 
 	constructor(
-		private employeeService: EmployeeService,
 		private userService: UserService,
-		private router: Router
+		private router: Router,
+		private employeeService: EmployeeService
 	) {}
 
 	ngOnInit(): void {
-		this.ticketForm = new FormGroup({
-			issue: new FormControl('', Validators.required),
-			priority: new FormControl('', Validators.required),
-		});
-
-		this.leaveForm = new FormGroup({
-			from: new FormControl('', Validators.required),
-			to: new FormControl('', Validators.required),
-			numDays: new FormControl('', Validators.required),
-		});
-
 		this.userService.getUser(localStorage.getItem('token')).subscribe({
 			next: (data) => {
 				this.employee = {
@@ -53,49 +41,49 @@ export class EmployeeComponent implements OnInit {
 					imageUrl: data.imageUrl,
 					managerName: data.managerName,
 					role: data.role,
+					leavesLeft: data.leavesLeft,
+					totalLeaves: data.totalLeaves,
 				};
 
 				if (!(this.employee.role == 'EMPLOYEE'))
-					this.router.navigateByUrl('/');
+					this.router.navigateByUrl('/login');
 			},
-			error: (err) => {
-				this.router.navigateByUrl('/');
+			error: (error) => {
+				this.userService.msg$.next(error.error.msg);
+				this.router.navigateByUrl('/login');
 			},
 		});
-
-		this.employeeService.getAllLeaves().subscribe((data) => {
-			this.leaveArray = data;
-		});
+		this.subscription.push(
+			this.employeeService.getAllLeaves('PENDING').subscribe({
+				next: (data) => {
+					this.leaveArry = data;
+				},
+				error: (err) => {},
+			})
+		);
+		this.subscription.push(
+			this.employeeService.fetchTickets('OPEN').subscribe({
+				next: (data) => {
+					this.tickets = data;
+				},
+				error: (error) => {},
+			})
+		);
 	}
 
-	onIssueSubmit() {
-		this.ticket = {
-			issue: this.ticketForm.value.issue,
-			priority: this.ticketForm.value.priority,
-			email: this.employee.email,
-		};
-		console.log(this.ticket);
+	onStatusUpdate($event: any) {
+		let id = $event;
+		this.subscription.push(
+			this.employeeService.updateTicketStatus(id, 'CLOSED').subscribe({
+				next: (data) => {
+					this.tickets = this.tickets.filter((t) => t._id !== id);
+				},
+				error: (error) => {},
+			})
+		);
 	}
 
-	onApplyLeave() {
-		this.leave = {
-			to: this.leaveForm.value.to,
-			from: this.leaveForm.value.from,
-			email: this.employee.email,
-			year: new Date().getFullYear(),
-			numDays: this.leaveForm.value.numDays,
-			status: 'PENDING',
-		};
-
-		this.employeeService.applyLeave(this.leave).subscribe({
-			next: (data) => {
-				this.leave = data;
-				this.leaveMsg = 'Leave applied sucessfully';
-				this.leaveArray.unshift(this.leave);
-			},
-			error: (err) => {
-				this.leaveErrorMsg = 'Could not apply leave, please try later';
-			},
-		});
+	ngOnDestroy(): void {
+		this.subscription.forEach((s) => s.unsubscribe());
 	}
 }

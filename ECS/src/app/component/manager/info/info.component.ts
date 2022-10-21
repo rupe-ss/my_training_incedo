@@ -1,24 +1,25 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Employee } from 'src/app/models/employee.model';
+import { UserInfo } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-	selector: 'app-employee-info',
+	selector: 'app-manager-info',
 	templateUrl: './info.component.html',
 	styleUrls: ['./info.component.css'],
 })
-export class InfoComponent implements OnInit {
-	@Input('employee')
-	employee: Employee;
+export class ManagerInfoComponent implements OnInit {
+	@Input('manager')
+	manager: UserInfo;
 
-	constructor(private router: Router, private userService: UserService) {}
+	@Input('employees')
+	employees: Employee[];
+	constructor(private userService: UserService, private router: Router) {}
 
 	ngOnInit(): void {}
-
 	onLogout() {
 		localStorage.removeItem('token');
-		console.log('logging out..');
 		this.userService.msg$.next('Logout Successfull!!');
 		this.router.navigateByUrl('/login');
 	}

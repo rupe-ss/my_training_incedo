@@ -1,7 +1,7 @@
 export class AccessRequest {
 	id?: number;
-	name: string;
+	name?: string;
 	email?: string;
-	jobTitle: string;
-	status: string;
+	jobTitle?: string;
+	status?: string;
 }

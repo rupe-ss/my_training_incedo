@@ -18,7 +18,8 @@ app.use(
   })
 );
 
-app.use("/api/costumer", require("./routes/api/costumer"));
+app.use("/api/user", require("./routes/api/user"));
+app.use("/api/auth", require("./routes/api/auth"));
 
 app.listen(PORT, () => {
   console.log(`Server is running at port ${PORT}.`);

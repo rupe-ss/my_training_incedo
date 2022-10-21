@@ -9,4 +9,6 @@ export class Employee {
 	imageUrl?: string;
 	role?: string;
 	managerId?: string;
+	leavesLeft?: number;
+	totalLeaves?: number;
 }

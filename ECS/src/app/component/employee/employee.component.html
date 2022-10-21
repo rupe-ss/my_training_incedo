@@ -2,102 +2,29 @@
 	<div class="dashboard">
 		<div class="fb-cell fb-cell--1">
 			<div class="fb-item">
+				<!-- info component goes here -->
 				<app-employee-info [employee]="employee"></app-employee-info>
 			</div>
 		</div>
 		<div class="fb-cell fb-cell--2">
 			<div class="fb-item">
-				<div class="ticket-form">
-					<div class="form-header">
-						<h2>Generate Ticket</h2>
-					</div>
-					<div class="error-msg">
-						{{ msg }}
-					</div>
-					<div class="form-container">
-						<form
-							(submit)="onIssueSubmit()"
-							[formGroup]="ticketForm"
-						>
-							<div>
-								<textarea
-									formControlName="issue"
-									rows="10"
-									cols="50"
-									placeholder="Add Issue in detail"
-								></textarea>
-							</div>
-							<br />
-							<div>
-								<label>Select Priority:</label>
-								<select
-									formControlName="priority"
-									name="priority"
-									style="width: 100%"
-								>
-									<option
-										*ngFor="let p of priorities"
-										value="{{ p }}"
-									>
-										{{ p }}
-									</option>
-								</select>
-							</div>
-							<br />
-							<div>
-								<input
-									type="submit"
-									value="Generate Ticket"
-									[disabled]="!ticketForm.valid"
-								/>
-							</div>
-						</form>
-					</div>
-				</div>
+				<!-- Ticket component goes here -->
+				<app-employee-ticket></app-employee-ticket>
 			</div>
 		</div>
 		<div class="fb-cell fb-cell--3">
 			<div class="fb-item">
-				<div class="ticket-form">
-					<div class="form-header">
-						<h2>Apply Leave</h2>
-					</div>
-					<div>
-						<form [formGroup]="leaveForm" (submit)="onApplyLeave()">
-							<label>From Date: </label>
-							<input
-								type="date"
-								name="from"
-								formControlName="from"
-							/>
-							<br /><br />
-							<label>To Date: </label>
-							<input type="date" name="to" formControlName="to" />
-							<br /><br />
-							<label>Number of Days: </label>
-							<input type="text" formControlName="numDays" />
-							<br /><br />
-							<input
-								type="submit"
-								value="Apply Leave"
-								[disabled]="!leaveForm.valid"
-							/>
-						</form>
-					</div>
-				</div>
+				<!-- apply leave component goes here -->
+				<app-employee-leave></app-employee-leave>
 			</div>
 		</div>
 		<div class="fb-cell fb-cell--4">
 			<div class="fb-item">
-				<ul>
-					<li *ngFor="let leave of leaveArray">
-						{{ leave.from }} -- {{ leave.to }} :
-						{{ leave.numDays }} days
-						<span *ngIf="leave.status === 'PENDING'"
-							>: {{ leave.status }}</span
-						>
-					</li>
-				</ul>
+				<app-employee-list
+					[tickets]="tickets"
+					[leaves]="leaveArry"
+					(status)="onStatusUpdate($event)"
+				></app-employee-list>
 			</div>
 		</div>
 	</div>
