@@ -10,9 +10,10 @@ import { MatCardModule } from '@angular/material/card';
 import { SignupComponent } from './auth/signup/signup.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, SignupComponent],
+  declarations: [AppComponent, LoginComponent, SignupComponent, HomeComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

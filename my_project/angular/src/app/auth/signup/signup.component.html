@@ -7,40 +7,166 @@
     <div class="form-header">
       <span>SignUp</span>
     </div>
+    <div class="msg">
+      {{ msg }}
+    </div>
 
     <div class="form-group">
       <label>Firstname: </label>
-      <input type="name" class="form-input" formControlName="firstname" />
+      <input
+        type="name"
+        class="form-input"
+        name="firstname"
+        formControlName="firstname"
+      />
     </div>
+    <span
+      *ngIf="
+        signUpForm.controls['firstname'].invalid &&
+        signUpForm.controls['firstname'].touched
+      "
+    >
+      <small *ngIf="signUpForm.controls['firstname'].errors['required']"
+        >Firstname is required</small
+      >
+      <small *ngIf="signUpForm.controls['firstname'].errors['pattern']"
+        >No special chars are allowed</small
+      >
+    </span>
 
     <div class="form-group">
       <label>Lastname: </label>
-      <input type="name" class="form-input" formControlName="lastname" />
+      <input
+        type="name"
+        class="form-input"
+        name="lastname"
+        formControlName="lastname"
+      />
     </div>
-
-    <div class="form-group">
-      <label>City: </label>
-      <input type="name" class="form-input" formControlName="city" />
-    </div>
+    <span
+      *ngIf="
+        signUpForm.controls['lastname'].invalid &&
+        signUpForm.controls['lastname'].touched
+      "
+    >
+      <small *ngIf="signUpForm.controls['lastname'].errors['required']"
+        >Lastname is required</small
+      >
+      <small *ngIf="signUpForm.controls['lastname'].errors['pattern']"
+        >No special chars are allowed</small
+      >
+    </span>
 
     <div class="form-group">
       <label>State: </label>
-      <input type="name" class="form-input" formControlName="state" />
+      <select class="form-input" formControlName="state">
+        <option value="{{ j }}" *ngFor="let j of states">{{ j }}</option>
+      </select>
     </div>
+    <span
+      *ngIf="
+        signUpForm.controls['state'].invalid &&
+        signUpForm.controls['state'].touched
+      "
+    >
+      <small *ngIf="signUpForm.controls['state'].errors['required']"
+        >State is required</small
+      >
+    </span>
+
+    <div class="form-group">
+      <label>City: </label>
+      <select class="form-input" formControlName="city">
+        <option *ngFor="let c of cities" value="{{ c }}">{{ c }}</option>
+      </select>
+    </div>
+    <span
+      *ngIf="
+        signUpForm.controls['city'].invalid &&
+        signUpForm.controls['city'].touched
+      "
+    >
+      <small *ngIf="signUpForm.controls['city'].errors['required']"
+        >Manager is required</small
+      >
+    </span>
 
     <div class="form-group">
       <label>Email: </label>
-      <input type="email" class="form-input" formControlName="email" />
+      <input
+        type="text"
+        class="form-input"
+        name="email"
+        formControlName="email"
+      />
     </div>
+    <span
+      *ngIf="
+        signUpForm.controls['email'].invalid &&
+        signUpForm.controls['email'].touched
+      "
+    >
+      <small *ngIf="signUpForm.controls['email'].errors['required']"
+        >Email is required</small
+      >
+      <small *ngIf="signUpForm.controls['email'].errors['pattern']"
+        >please enter correct email format</small
+      >
+    </span>
 
     <div class="form-group">
       <label>Password: </label>
-      <input type="password" class="form-input" formControlName="password" />
+      <input
+        type="password"
+        class="form-input"
+        name="password"
+        formControlName="password"
+      />
     </div>
+    <span
+      *ngIf="
+        signUpForm.controls['password'].invalid &&
+        signUpForm.controls['password'].touched
+      "
+    >
+      <small *ngIf="signUpForm.controls['password'].errors['required']"
+        >Password is required</small
+      >
+      <small *ngIf="signUpForm.controls['password'].errors['minlength']"
+        >Password should be minimum 5 characters</small
+      >
+      <small *ngIf="signUpForm.controls['password'].errors['pattern']"
+        >Characters allowed: [a-zA-Z0-9 _#]</small
+      >
+    </span>
+    <div class="form-group">
+      <label>Re-Password: </label>
+      <input
+        type="password"
+        class="form-input"
+        name="repassword"
+        formControlName="repassword"
+      />
+    </div>
+    <span
+      *ngIf="
+        signUpForm.controls['repassword'].invalid &&
+        signUpForm.controls['repassword'].touched
+      "
+    >
+      <small *ngIf="signUpForm.controls['repassword'].errors['required']"
+        >Re-password is required</small
+      >
+    </span>
 
     <div class="form-group">
-      <label>Re-Enter Password: </label>
-      <input type="password" class="form-input" formControlName="repassword" />
+      <label>Are you a employee ? If you are check below</label>
+      <input
+        type="checkbox"
+        class="form-input"
+        name="isEmployee"
+        formControlName="isEmployee"
+      />
     </div>
 
     <div class="form-group">
@@ -48,9 +174,10 @@
         type="submit"
         class="login-button"
         value="Sign Up"
-        style="color: white"
+        [disabled]="!signUpForm.valid"
       />
     </div>
+
     <div class="form-footer">
       Already Signed Up? <a routerLink="/">Login here</a>
     </div>

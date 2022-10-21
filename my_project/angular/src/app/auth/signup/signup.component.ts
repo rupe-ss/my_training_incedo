@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Costumer } from 'src/app/models/costumer.model';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -10,9 +12,30 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class SignupComponent implements OnInit {
   signUpForm: FormGroup;
+  user: User;
+  states: string[] = [
+    'Ohio',
+    'Kentucky',
+    'New york',
+    'Maine',
+    'New Hampshire',
+    'Vermont',
+    'Massachusetts',
+    'Rhode Island',
+    'Connecticut',
+    'Delaware',
+  ];
+  cities: string[] = [
+    'New York',
+    'Portland',
+    'Pittsburgh',
+    'Williamstown',
+    'New Haven',
+  ];
   msg: string = '';
-  costumer: Costumer;
-  constructor(private userService: UserService) {}
+  subscription: Subscription;
+
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.signUpForm = new FormGroup({
@@ -42,6 +65,7 @@ export class SignupComponent implements OnInit {
         Validators.pattern(/^[a-zA-Z0-9 _#]+$/),
       ]),
       repassword: new FormControl('', Validators.required),
+      isEmployee: new FormControl(''),
     });
   }
 
@@ -51,19 +75,32 @@ export class SignupComponent implements OnInit {
       !(this.signUpForm.value.password === this.signUpForm.value.repassword)
     ) {
       this.msg = 'Passwords do not Match';
+      console.log(this.msg);
       return;
     }
 
+    let role = '';
+    if (this.signUpForm.value.isEmployee) role = 'EMPLOYEE';
+    else role = 'COSTUMER';
+
     /* 2. call API and post this data */
-    this.costumer = {
+    this.user = {
       firstname: this.signUpForm.value.firstname,
       lastname: this.signUpForm.value.lastname,
-      city: this.signUpForm.value.city,
       state: this.signUpForm.value.state,
+      city: this.signUpForm.value.city,
       email: this.signUpForm.value.email,
       password: this.signUpForm.value.password,
+      role: role,
     };
-
-    this.userService.signUp();
+    this.userService.signup(this.user).subscribe({
+      next: (data) => {
+        this.userService.msg$.next('SignUp Success');
+        this.router.navigateByUrl('/');
+      },
+      error: (error) => {
+        this.msg = error.error.msg;
+      },
+    });
   }
 }

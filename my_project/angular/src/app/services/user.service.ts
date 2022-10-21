@@ -1,16 +1,22 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Costumer } from '../models/costumer.model';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { Login } from '../models/login.model';
+import { User } from '../models/user.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
+  msg$ = new BehaviorSubject<string>('');
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
+  public signup(user: User): Observable<any> {
+    return this.http.post<any>(environment.serverUrl + 'user/add', user);
+  }
 
-  public signUp(costumer: Costumer): Observable<String> {
-    return this.http.post<String>('link' + )
+  public login(login: Login): Observable<string> {
+    return this.http.post<string>(environment.serverUrl + 'auth/login', login);
   }
 }
