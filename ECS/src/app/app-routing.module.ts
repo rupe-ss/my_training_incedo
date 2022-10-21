@@ -9,7 +9,8 @@ import { AuthGuardService } from './services/auth-guard.service';
 import { PageNotFoundComponent } from './component/page-not-found/page-not-found.component';
 
 const routes: Routes = [
-	{ path: '', component: LoginComponent },
+	{ path: '', redirectTo: 'login', pathMatch: 'full' },
+	{ path: 'login', component: LoginComponent },
 	{ path: 'sign-up', component: SignUpComponent },
 	{ path: 'home', component: HomeComponent, canActivate: [AuthGuardService] },
 	{

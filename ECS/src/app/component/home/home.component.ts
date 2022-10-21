@@ -16,7 +16,6 @@ export class HomeComponent implements OnInit {
 	ngOnInit(): void {
 		this.userService.getUser(localStorage.getItem('token')).subscribe({
 			next: (data) => {
-				console.log('data->' + data);
 				this.user = data;
 				if (this.user.role == 'EMPLOYEE')
 					this.router.navigateByUrl('/employee');

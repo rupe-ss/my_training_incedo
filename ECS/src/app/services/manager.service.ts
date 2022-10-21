@@ -60,7 +60,7 @@ export class ManagerService {
 		});
 	}
 
-	updateResponse(
+	public updateResponse(
 		token: string,
 		id: string,
 		response: string

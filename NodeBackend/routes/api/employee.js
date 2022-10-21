@@ -8,26 +8,40 @@ const Manager = require("../../models/Manager");
 const auth = require("../../middleware/auth");
 
 /* 
-   @Path: /api/employee/all:managerEmail
-   @response: all employees that works with 'managerEmail'
+   @Path: /api/employee/all/:managerEmail 
+   @response: all employees that work with 'managerEmail'.
 */
-router.get("/all/:managerEmail", async (req, res) => {
-  const managerEmail = req.params["managerEmail"];
-  const employee = await Employee.find({ managerEmail }).select(
+router.get("/all/", auth, async (req, res) => {
+  const { id } = req.user;
+  const user = await User.findById(id);
+
+  if (!(user.role === "MANAGER")) {
+    return res.status(401).json({ msg: "Unauthorized" });
+  }
+
+  const employee = await Employee.find({ managerEmail: user.email }).select(
     "-managerEmail"
   );
   res.send(employee);
 });
 
 /* 
-   @Path: /api/employee/all:managerEmail
-   @response: all employees that works with 'managerEmail'
+   @Path: /api/employee/access
+   @response:  
 */
-router.get("/all/access", auth, async (req, res) => {
-  const managerEmail = req.params["managerEmail"];
-  const employee = await Employee.find({ managerEmail }).select(
-    "-managerEmail"
-  );
+router.get("/access", auth, async (req, res) => {
+  const { id } = req.user;
+
+  const user = await User.findById(id);
+
+  if (!(user.role === "MANAGER")) {
+    return res.status(401).json({ msg: "Unauthorized" });
+  }
+
+  const employee = await Employee.find({
+    $and: [{ managerEmail: user.email }, { status: "0" }],
+  });
+
   res.send(employee);
 });
 

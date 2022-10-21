@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Employee } from 'src/app/models/employee.model';
 import { Leave } from 'src/app/models/leave.model';
+import { Ticket } from 'src/app/models/ticket.model';
 import { UserInfo } from 'src/app/models/user.model';
 import { ManagerService } from 'src/app/services/manager.service';
 import { UserService } from 'src/app/services/user.service';
@@ -16,6 +17,7 @@ export class ManagerComponent implements OnInit {
 	employeeNoAccess: Employee[] = [];
 	leaves: Leave[] = [];
 	employees: Employee[];
+	tickets: Ticket[] = [];
 	constructor(
 		private managerService: ManagerService,
 		private userService: UserService,

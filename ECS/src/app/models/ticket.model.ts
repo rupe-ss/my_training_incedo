@@ -3,7 +3,7 @@ export class Ticket {
 	issue?: string;
 	priority?: string;
 	email?: string;
-	genaratedDate?: string;
+	generatedDate?: string;
 	status?: string;
 	response?: string;
 }

@@ -5,7 +5,7 @@
 	</div>
 	<div *ngFor="let t of tickets">
 		Ticket raised by: {{ t.email }}, on
-		{{ t.genaratedDate.split("T", 2)[0] }} &nbsp;&nbsp;&nbsp; Priority:
+		{{ t.generatedDate.split("T", 2)[0] }} &nbsp;&nbsp;&nbsp; Priority:
 		{{ t.priority }}<br />
 		Issue: {{ t.issue }} <br />
 		<label>Any solution for this?</label><br />
