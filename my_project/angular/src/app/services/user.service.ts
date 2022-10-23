@@ -13,10 +13,17 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   public signup(user: User): Observable<any> {
-    return this.http.post<any>(environment.serverUrl + 'user/add', user);
+    return this.http.post<any>(environment.serverUrl + '/user/add', user);
   }
 
   public login(login: Login): Observable<string> {
-    return this.http.post<string>(environment.serverUrl + 'auth/login', login);
+    return this.http.post<string>(environment.serverUrl + '/auth/login', login);
+  }
+
+  public getUser(token: string) {
+    const header = { 'x-auth-token': token };
+    return this.http.get<User>(environment.serverUrl + '/auth/user', {
+      headers: header,
+    });
   }
 }

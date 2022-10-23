@@ -1,9 +1,11 @@
 const express = require("express");
 const Employee = require("../../models/Employee");
+const Costumer = require("../../models/Costumer");
 const User = require("../../models/User");
 const bcrypt = require("bcryptjs");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
+const auth = require("../../middleware/auth");
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
@@ -38,6 +40,27 @@ router.post("/login", async (req, res) => {
   } catch (err) {
     res.send(500).json({
       msg: "Server Error",
+    });
+  }
+});
+
+router.get("/user", auth, async (req, res) => {
+  console.log(req.user);
+  const { id } = req.user;
+  try {
+    const user = await User.findById(id).select("-password");
+    if (user.role == "EMPLOYEE") {
+      const employee = await Employee.findOne({ email: user.email }).select(
+        "-status"
+      );
+      return res.status(200).send(employee);
+    } else {
+      const costumer = await Costumer.findOne({ email: user.email });
+      return res.status(200).send(costumer);
+    }
+  } catch (err) {
+    res.status(500).json({
+      msg: "Server error",
     });
   }
 });

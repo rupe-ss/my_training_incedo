@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const Costumer = require("../../models/Costumer");
 const User = require("../../models/User");
-const { body, validationResult } = require("express-validator");
+const { validationResult } = require("express-validator");
 const Employee = require("../../models/Employee");
 
 router.post("/add", async (req, res) => {
@@ -15,6 +15,10 @@ router.post("/add", async (req, res) => {
 
   /* Read the data from the request body */
   const { firstname, lastname, city, state, email, password, role } = req.body;
+
+  if (!(role === "EMPLOYEE" || "COSTUMER")) {
+    return res.status(400).json({ msg: "Role is invalid." });
+  }
 
   let person;
   /* Check if the costumer email exists */
@@ -68,12 +72,14 @@ router.post("/add", async (req, res) => {
   user.password = hashPassword;
 
   /* Save the objects in the DB */
-  person = await person.save();
-  user = await user.save();
+
   if (person && user) {
+    person = await person.save();
+    user = await user.save();
     res.send("Signup Successfully");
   } else {
     return res.status(400).json({ msg: "Signup Failed" });
   }
 });
+
 module.exports = router;

@@ -11,9 +11,18 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './components/home/home.component';
+import { EmployeeComponent } from './components/employee/employee.component';
+import { CostumerComponent } from './components/costumer/costumer.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, SignupComponent, HomeComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    SignupComponent,
+    HomeComponent,
+    EmployeeComponent,
+    CostumerComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
