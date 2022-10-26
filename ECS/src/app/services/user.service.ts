@@ -26,11 +26,12 @@ export class UserService {
 	// Call get API for login
 	// */
 	// }
-	login(login: Login) {
-		return this.http.post<string>(
-			environment.serverUrl + '/auth/login',
-			login
-		);
+	public login(login: Login) {
+		const token = window.btoa(login.email + ':' + login.password);
+		const header = { Authorization: 'Basic ' + token };
+		return this.http.get<string>(environment.serverUrl + '/auth/login', {
+			headers: header,
+		});
 	}
 
 	getUser(token: string): Observable<UserInfo> {
@@ -41,7 +42,9 @@ export class UserService {
 		// 	managerName: 'Albus Dumledore',
 		// 	role: 'MANAGER',
 		// };
-		const header = { 'x-auth-token': localStorage.getItem('token') };
+		const header = {
+			Authorization: 'Basic ' + token,
+		};
 		this.http
 			.get<UserInfo>(environment.serverUrl + '/auth/user', {
 				headers: header,

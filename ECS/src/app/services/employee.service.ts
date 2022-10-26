@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Leave } from '../models/leave.model';
 import { Ticket } from '../models/ticket.model';
-import { leaves } from '../data/data';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 @Injectable({
@@ -15,7 +14,10 @@ export class EmployeeService {
 	constructor(private http: HttpClient) {}
 
 	public postTicket(ticket: Ticket): Observable<Ticket> {
-		const header = { 'x-auth-token': localStorage.getItem('token') };
+		const header = {
+			Authorization: 'Basic ' + localStorage.getItem('token'),
+		};
+
 		return this.http.post<Ticket>(
 			environment.serverUrl + '/ticket/add',
 			ticket,
@@ -24,7 +26,10 @@ export class EmployeeService {
 	}
 
 	public applyLeave(leave: Leave): Observable<Leave> {
-		const header = { 'x-auth-token': localStorage.getItem('token') };
+		const header = {
+			Authorization: 'Basic ' + localStorage.getItem('token'),
+		};
+
 		return this.http.post<Leave>(
 			environment.serverUrl + '/leave/add',
 			leave,
@@ -59,6 +64,12 @@ export class EmployeeService {
 			environment.serverUrl + '/ticket/status/update',
 			obj,
 			{ headers: header }
+		);
+	}
+
+	fetchhAllPriorities(): Observable<string[]> {
+		return this.http.get<string[]>(
+			environment.serverUrl + '/ticket/priority/all'
 		);
 	}
 }

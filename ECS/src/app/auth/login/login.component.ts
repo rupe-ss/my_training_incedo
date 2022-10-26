@@ -40,7 +40,10 @@ export class LoginComponent implements OnInit {
 
 		this.userService.login(this.login).subscribe({
 			next: (data) => {
-				localStorage.setItem('token', data);
+				const token = window.btoa(
+					this.login.email + ':' + this.login.password
+				);
+				localStorage.setItem('token', token);
 				/* Update the subject(status$)*/
 				this.authService.status$.next(true);
 				this.router.navigateByUrl('/home');
