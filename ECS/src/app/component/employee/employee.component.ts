@@ -76,7 +76,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
 		this.subscription.push(
 			this.employeeService.updateTicketStatus(id, 'CLOSED').subscribe({
 				next: (data) => {
-					this.tickets = this.tickets.filter((t) => t._id !== id);
+					this.tickets = this.tickets.filter((t) => t.id !== id);
 				},
 				error: (error) => {},
 			})

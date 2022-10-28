@@ -38,13 +38,22 @@ export class ListComponent implements OnInit, OnDestroy {
 		);
 		this.subscription.push(
 			this.employeeService.ticketCreated$.subscribe((data) => {
-				if (this.tickets) this.tickets.push(data);
+				if (this.tickets) this.tickets.unshift(data);
 			})
 		);
 	}
 
 	onCloseTicket(id: string) {
 		this.updateStatus.emit(id);
+	}
+
+	onLeaveDelete(id: number) {
+		this.employeeService.deleteLeave(id).subscribe({
+			next: (data) => {
+				this.leaves = this.leaves.filter((l) => l.id !== id);
+			},
+			error: () => {},
+		});
 	}
 
 	ngOnDestroy(): void {

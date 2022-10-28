@@ -38,7 +38,9 @@ export class EmployeeService {
 	}
 
 	public getAllLeaves(status): Observable<Leave[]> {
-		const header = { 'x-auth-token': localStorage.getItem('token') };
+		const header = {
+			Authorization: 'Basic ' + localStorage.getItem('token'),
+		};
 		return this.http.get<Leave[]>(
 			environment.serverUrl + '/leave/employee/all/' + status,
 			{ headers: header }
@@ -46,7 +48,9 @@ export class EmployeeService {
 	}
 
 	public fetchTickets(status: string): Observable<Ticket[]> {
-		const header = { 'x-auth-token': localStorage.getItem('token') };
+		const header = {
+			Authorization: 'Basic ' + localStorage.getItem('token'),
+		};
 		return this.http.get<Ticket[]>(
 			environment.serverUrl + '/ticket/status/' + status,
 			{ headers: header }
@@ -58,7 +62,9 @@ export class EmployeeService {
 			ticketId: id,
 			status: status,
 		};
-		const header = { 'x-auth-token': localStorage.getItem('token') };
+		const header = {
+			Authorization: 'Basic ' + localStorage.getItem('token'),
+		};
 
 		return this.http.put<any>(
 			environment.serverUrl + '/ticket/status/update',
@@ -70,6 +76,16 @@ export class EmployeeService {
 	fetchhAllPriorities(): Observable<string[]> {
 		return this.http.get<string[]>(
 			environment.serverUrl + '/ticket/priority/all'
+		);
+	}
+
+	deleteLeave(id: number): Observable<any> {
+		const header = {
+			Authorization: 'Basic ' + localStorage.getItem('token'),
+		};
+		return this.http.delete<any>(
+			environment.serverUrl + '/leave/delete/' + id,
+			{ headers: header }
 		);
 	}
 }

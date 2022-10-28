@@ -1,5 +1,10 @@
 package com.playground.api.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.playground.api.model.Manager;
+
 public class ManagerDto {
 
 	private Long id;
@@ -93,6 +98,35 @@ public class ManagerDto {
 	public String toString() {
 		return "ManagerDto [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", imageUrl="
 				+ imageUrl + ", jobTitle=" + jobTitle + ", role=" + role + "]";
+	}
+	
+	public static ManagerDto convertToDto(Manager manager) {
+		ManagerDto dto = new ManagerDto();
+		dto.setId(manager.getId());
+		dto.setEmail(manager.getUser().getUsername());
+		dto.setName(manager.getName());
+		dto.setJobTitle(manager.getJobTitle());
+		dto.setRole(manager.getUser().getRole());
+		dto.setImageUrl("");
+		dto.setPassword("");
+		
+		return dto;  
+	}
+	
+	public static List<ManagerDto> convertToListDto(List<Manager> list){
+		List<ManagerDto> listDto = new ArrayList<>();
+		for(Manager manager: list) {
+			ManagerDto dto = new ManagerDto();
+			dto.setId(manager.getId());
+			dto.setEmail(manager.getUser().getUsername());
+			dto.setName(manager.getName());
+			dto.setJobTitle(manager.getJobTitle());
+			dto.setRole(manager.getUser().getRole());
+			dto.setImageUrl("");
+			dto.setPassword("");
+			listDto.add(dto);
+		}
+		return listDto;
 	}
 
 }

@@ -12,7 +12,9 @@ import { Ticket } from '../models/ticket.model';
 export class ManagerService {
 	constructor(private http: HttpClient) {}
 	public getEmployeeWithoutAccess(token: string): Observable<Employee[]> {
-		const header = { 'x-auth-token': token };
+		const header = {
+			Authorization: 'Basic ' + token,
+		};
 		return this.http.get<Employee[]>(
 			environment.serverUrl + '/employee/access',
 			{ headers: header }
@@ -20,7 +22,9 @@ export class ManagerService {
 	}
 
 	public grantAccess(email: string, token: string): Observable<any> {
-		const header = { 'x-auth-token': token };
+		const header = {
+			Authorization: 'Basic ' + token,
+		};
 		return this.http.get<any>(
 			environment.serverUrl + '/user/grant-access/' + email,
 			{ headers: header }
@@ -28,7 +32,9 @@ export class ManagerService {
 	}
 
 	public fetchLeavesPending(token: string): Observable<Leave[]> {
-		const header = { 'x-auth-token': token };
+		const header = {
+			Authorization: 'Basic ' + token,
+		};
 		return this.http.get<Leave[]>(environment.serverUrl + '/leave/all', {
 			headers: header,
 		});
@@ -37,15 +43,15 @@ export class ManagerService {
 	public updateLeaveStatus(
 		token: string,
 		leaveStatus: string,
-		leaveID: string,
+		leaveID: number,
 		eemail: String
 	): Observable<any> {
-		const header = { 'x-auth-token': token };
+		const header = {
+			Authorization: 'Basic ' + token,
+		};
 		return this.http.get(
 			environment.serverUrl +
 				'/leave/update-status/' +
-				eemail +
-				'/' +
 				leaveID +
 				'/' +
 				leaveStatus,
@@ -54,7 +60,9 @@ export class ManagerService {
 	}
 
 	public fetchTickets(token: string): Observable<Ticket[]> {
-		const header = { 'x-auth-token': token };
+		const header = {
+			Authorization: 'Basic ' + token,
+		};
 		return this.http.get<Ticket[]>(environment.serverUrl + '/ticket/all', {
 			headers: header,
 		});
@@ -65,7 +73,9 @@ export class ManagerService {
 		id: string,
 		response: string
 	): Observable<any> {
-		const header = { 'x-auth-token': token };
+		const header = {
+			Authorization: 'Basic ' + token,
+		};
 		let tbody = {
 			ticketId: id,
 			response: response,
@@ -78,10 +88,27 @@ export class ManagerService {
 	}
 
 	public getAllEmployees(token: string): Observable<Employee[]> {
-		const header = { 'x-auth-token': token };
+		const header = {
+			Authorization: 'Basic ' + token,
+		};
 		return this.http.get<Employee[]>(
 			environment.serverUrl + '/employee/all',
 			{ headers: header }
 		);
+	}
+
+	public updateLeaveResponse(
+		token: string,
+		leaveId: number,
+		response: string
+	): Observable<any> {
+		const header = { Authorization: 'Basic ' + token };
+		let obj = {
+			id: leaveId,
+			response: response,
+		};
+		return this.http.put(environment.serverUrl + '/leave/update', obj, {
+			headers: header,
+		});
 	}
 }

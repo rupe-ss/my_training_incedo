@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -28,6 +29,9 @@ public class Employee { //by default table name will be 'employee'
 	
 	@OneToOne
 	private User user; 
+	
+	@OneToOne
+	private Manager manager; 
 	
 	public Employee() {  }
 
@@ -106,6 +110,18 @@ public class Employee { //by default table name will be 'employee'
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Manager getManager() {
+		return manager;
+	}
+
+	public void setManager(Manager manager) {
+		this.manager = manager;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	@Override

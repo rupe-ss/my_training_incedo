@@ -19,6 +19,8 @@ public class User {
 	private String password;
 	private String role;
 	
+	private boolean enabled;
+	
 	public User() {
 		 
 	}
@@ -63,9 +65,18 @@ public class User {
 		this.role = role;
 	}
 
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", role=" + role + "]";
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", role=" + role + ", enabled="
+				+ enabled + "]";
 	}
 	
 }

@@ -1,5 +1,5 @@
 export class Leave {
-	_id?: string;
+	id?: number;
 	to?: string;
 	from?: string;
 	email?: string;

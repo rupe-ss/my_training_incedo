@@ -12,7 +12,9 @@
 					{{ l.comments }}
 				</div>
 				<br />
-				<button class="ticket-button">Archive</button>
+				<button class="ticket-button" (click)="onLeaveDelete(l.id)">
+					Archive
+				</button>
 				<hr />
 			</div>
 		</div>
@@ -26,7 +28,7 @@
 			<div class="ticket-response" *ngIf="t.response">
 				{{ t.response }}
 			</div>
-			<button class="ticket-button" (click)="onCloseTicket(t._id)">
+			<button class="ticket-button" (click)="onCloseTicket(t.id)">
 				Close the ticket
 			</button>
 			<hr />
