@@ -1,6 +1,10 @@
 import { Component } from "react";
+import "./styles/AppStyles.css";
 
 export default class App extends Component {
+  spanStyle = {
+    fontSize: 30,
+  };
   constructor(props) {
     super(props);
 
@@ -16,7 +20,9 @@ export default class App extends Component {
         <h1>Calc Ops</h1>
         <p>x = {this.state.x}</p>
         <p>y = {this.state.y}</p>
-        <h3>Ans is: {this.state.ans}</h3>
+        <span className="span-style">
+          Ans is: {this.state.ans === 0 ? "" : this.state.ans}
+        </span>
         <hr></hr>
         <button
           onClick={() => {
