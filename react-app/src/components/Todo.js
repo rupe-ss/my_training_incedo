@@ -21,7 +21,7 @@ export class Todo extends Component {
       .then((response) => response.json())
       .then((data) => {
         this.setState({
-          todos: data,
+          todos: data.slice(0, 10),
         });
       });
   }
@@ -34,11 +34,19 @@ export class Todo extends Component {
               <div className="todo" key={e.id}>
                 ID: {e.id} USERID: {e.userId} <br />
                 Title: {e.title} <br />
+                Completed: {e.completed ? "true" : "false"} <br />
+                <button onClick={() => this.onDelete(e.id)}>Delete</button>
               </div>
             );
           })}
         </div>
       </div>
     );
+  }
+
+  onDelete(id) {
+    this.setState({
+      todos: this.state.todos.filter((e) => e.id !== id),
+    });
   }
 }
