@@ -16,8 +16,28 @@ export class Nums extends Component {
           {this.state.arry.map((num) => {
             return <li key={Math.random() * 10000}>{num}</li>;
           })}
+          <button
+            onClick={() => {
+              this.sort("ASC");
+            }}
+          >
+            Sort-ASC
+          </button>{" "}
+          <button
+            onClick={() => {
+              this.sort("DSC");
+            }}
+          >
+            Sort-DSC
+          </button>
         </ul>
       </div>
     );
+  }
+
+  sort(sort) {
+    if (sort === "ASC") {
+      this.setState({ arry: this.state.arry.sort((a, b) => a - b) });
+    } else this.setState({ arry: this.state.arry.sort((a, b) => b - a) });
   }
 }
