@@ -10,9 +10,9 @@ export default class App extends Component {
     return (
       <div>
         {/* <Calc />
-        <Nums />
-        <Todo /> */}
-        <Post />
+        <Nums /> */}
+        <Todo />
+        {/* <Post /> */}
       </div>
     );
   }
