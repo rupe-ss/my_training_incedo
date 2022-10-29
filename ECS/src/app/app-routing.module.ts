@@ -7,9 +7,11 @@ import { EmployeeComponent } from './component/employee/employee.component';
 import { ManagerComponent } from './component/manager/manager.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { PageNotFoundComponent } from './component/page-not-found/page-not-found.component';
+import { AdminDashboardComponent } from './component/admin/admin-dashboard/admin-dashboard.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: 'login', pathMatch: 'full' },
+	{ path: 'admin', component: AdminDashboardComponent },
 	{ path: 'login', component: LoginComponent },
 	{ path: 'sign-up', component: SignUpComponent },
 	{ path: 'home', component: HomeComponent, canActivate: [AuthGuardService] },
